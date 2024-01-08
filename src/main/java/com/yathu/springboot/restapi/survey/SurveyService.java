@@ -1,7 +1,10 @@
 package com.yathu.springboot.restapi.survey;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,5 +47,37 @@ public class SurveyService {
             return null;
         }
         return optionalSurvey.get();
+    }
+
+    public List<Question> retrieveAllSurveyQuestions(String surveyId) {
+        Survey survey = retrieveSurveyById(surveyId);
+        if(survey== null){
+            return null;
+        }
+        return survey.getQuestions();
+    }
+    public Question retrieveQuestion(String surveyId, String questionId) {
+       List<Question> questions = retrieveAllSurveyQuestions(surveyId);
+      //  Predicate<? super Question> predicate = question -> question.getId().equalsIgnoreCase(questionId);
+        Optional<Question> optionalQuestion =
+                questions.stream().
+                filter(question -> question.getId().equalsIgnoreCase(questionId)).findFirst();
+        if(optionalQuestion.isEmpty()){
+            return null;
+        }
+        return optionalQuestion.get();
+    }
+
+    public String addNewSurveyQuestion(String surveyId, Question question) {
+        List<Question> questions = retrieveAllSurveyQuestions(surveyId);
+        question.setId(generateRandomId());
+        questions.add(question);
+        return question.getId();
+    }
+
+    private static String generateRandomId() {
+        SecureRandom random = new SecureRandom();
+        String randId= new BigInteger(32,random).toString();
+        return randId;
     }
 }
