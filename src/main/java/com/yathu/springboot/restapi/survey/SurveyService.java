@@ -58,6 +58,9 @@ public class SurveyService {
     }
     public Question retrieveQuestion(String surveyId, String questionId) {
        List<Question> questions = retrieveAllSurveyQuestions(surveyId);
+       if(questions==null){
+           return null;
+       }
       //  Predicate<? super Question> predicate = question -> question.getId().equalsIgnoreCase(questionId);
         Optional<Question> optionalQuestion =
                 questions.stream().
@@ -79,5 +82,18 @@ public class SurveyService {
         SecureRandom random = new SecureRandom();
         String randId= new BigInteger(32,random).toString();
         return randId;
+    }
+
+    public String deleteSurveyQuestion(String surveyId, String questionId) {
+        List<Question> questions = retrieveAllSurveyQuestions(surveyId);
+        if(questions==null){
+            return null;
+        }
+        Predicate<Question> predicate = question -> question.getId().equalsIgnoreCase(questionId);
+       boolean removed = questions.removeIf(predicate);
+       if(!removed){
+           return null;
+       }
+        return questionId;
     }
 }
