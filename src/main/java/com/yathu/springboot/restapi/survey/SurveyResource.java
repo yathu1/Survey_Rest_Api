@@ -55,4 +55,12 @@ public class SurveyResource {
         return ResponseEntity.created(location).build();
 
     }
+    @RequestMapping(value = "/surveys/{surveyId}/questions/{questionId}",method = RequestMethod.DELETE)
+    public ResponseEntity<Object> addNewSurveyQuestion(@PathVariable String surveyId, @PathVariable String questionId){
+
+       surveyService.deleteSurveyQuestion(surveyId, questionId);
+
+        return ResponseEntity.noContent().build();
+
+    }
 }
