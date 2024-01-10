@@ -4,6 +4,7 @@ import ch.qos.logback.core.read.CyclicBufferAppender;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.when;
 //Mock the SurveyService.retriveSpecificSurveyQuestion(surveyId,questionId) method
 
 @WebMvcTest(controllers = SurveyResource.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class SurveyResourceTest {
 
     @MockBean
