@@ -56,7 +56,7 @@ public class SurveyResource {
 
     }
     @RequestMapping(value = "/surveys/{surveyId}/questions/{questionId}",method = RequestMethod.DELETE)
-    public ResponseEntity<Object> addNewSurveyQuestion(@PathVariable String surveyId, @PathVariable String questionId){
+    public ResponseEntity<Object> deleteSurveyQuestion(@PathVariable String surveyId, @PathVariable String questionId){
 
        surveyService.deleteSurveyQuestion(surveyId, questionId);
 
